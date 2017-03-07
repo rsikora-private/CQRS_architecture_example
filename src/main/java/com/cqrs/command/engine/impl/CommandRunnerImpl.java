@@ -2,6 +2,7 @@ package com.cqrs.command.engine.impl;
 
 import com.cqrs.command.CommandHandler;
 import com.cqrs.command.engine.CommandRunner;
+import com.cqrs.command.engine.exception.CQRSBootstrapException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -22,8 +23,7 @@ import java.util.Map;
 @Component
 public class CommandRunnerImpl<C, R> implements CommandRunner<C, R>, ApplicationListener<ContextRefreshedEvent> {
 
-    @Autowired
-    private Map<Class<?>, CommandHandler<C, R>> handlers = new HashMap<>();
+    private final Map<Class<?>, CommandHandler<C, R>> handlers = new HashMap<>();
 
     @Autowired
     private ConfigurableListableBeanFactory beanFactory;
@@ -47,7 +47,7 @@ public class CommandRunnerImpl<C, R> implements CommandRunner<C, R>, Application
                 Class<?> handlerClass = Class.forName(commandHandler.getBeanClassName());
                 handlers.put(getHandledCommandType(handlerClass), commandHandler1);
             } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
+                throw new CQRSBootstrapException("Error occurred during application bootstrap", e);
             }
         }
     }
@@ -67,6 +67,6 @@ public class CommandRunnerImpl<C, R> implements CommandRunner<C, R>, Application
                 }
             }
         }
-        throw new RuntimeException();
+        throw new CQRSBootstrapException("Error occurred during application bootstrap");
     }
 }

@@ -1,6 +1,8 @@
 package com.cqrs.command.engine.impl;
 
 import com.cqrs.command.engine.CommandRunner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,12 +14,18 @@ import java.util.concurrent.CompletableFuture;
 
 @Component
 public class AsyncDecorator<C, R> {
+    private static final Logger LOG = LoggerFactory.getLogger(AsyncDecorator.class);
+
+    private final CommandRunner<C, R> commandRunner;
 
     @Autowired
-    private CommandRunner<C, R> commandRunner;
+    public AsyncDecorator(CommandRunner<C, R> commandRunner) {
+        this.commandRunner = commandRunner;
+    }
 
-    public CompletableFuture<R> run(final C command) {
-        return CompletableFuture.supplyAsync(()-> commandRunner.run(command));
+    public CompletableFuture<R> runAsync(final C command) {
+        LOG.debug("running new task in parallel");
+        return CompletableFuture.supplyAsync(() -> commandRunner.run(command));
     }
 
 }

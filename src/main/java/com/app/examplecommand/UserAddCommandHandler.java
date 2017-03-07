@@ -1,13 +1,13 @@
 package com.app.examplecommand;
 
-import com.cqrs.command.Command;
+import com.cqrs.command.CQRSCommandHandler;
 import com.cqrs.command.CommandHandler;
 
 /**
  * Created by robertsikora on 25.02.2017.
  */
 
-@Command
+@CQRSCommandHandler
 public class UserAddCommandHandler implements CommandHandler<UserAddCommand, Void> {
 
     @Override

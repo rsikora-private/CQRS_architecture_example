@@ -15,7 +15,6 @@ import java.lang.annotation.*;
 
 @Service
 @Transactional
-public @interface Command {
+public @interface CQRSCommandHandler {
 
-    boolean async() default false;
 }
