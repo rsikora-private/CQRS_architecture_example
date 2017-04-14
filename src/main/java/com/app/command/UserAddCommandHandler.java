@@ -1,4 +1,4 @@
-package com.app.examplecommand;
+package com.app.command;
 
 import com.cqrs.command.CQRSCommandHandler;
 import com.cqrs.command.CommandHandler;

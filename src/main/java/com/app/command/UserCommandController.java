@@ -1,4 +1,4 @@
-package com.app.examplecommand;
+package com.app.command;
 
 import com.cqrs.command.engine.CommandDispatcher;
 import org.springframework.beans.factory.annotation.Autowired;

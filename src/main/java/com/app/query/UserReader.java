@@ -1,4 +1,4 @@
-package com.app.examplecommand;
+package com.app.query;
 
 import com.cqrs.query.Reader;
 
