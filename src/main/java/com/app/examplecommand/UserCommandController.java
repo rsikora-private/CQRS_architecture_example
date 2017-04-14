@@ -9,15 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by rsikora on 3/6/2017.
  */
 
-@RestController
-public class UserController {
+@RestController("/users")
+public class UserCommandController {
 
     @Autowired
     private CommandDispatcher commandDispatcher;
 
-
-    @PostMapping("/users")
-    public String index() {
+    @PostMapping
+    public String addUser() {
         commandDispatcher.dispatch(new UserAddCommand());
         return "Greetings from Spring Boot!";
     }

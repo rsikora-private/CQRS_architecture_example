@@ -25,8 +25,12 @@ public class CommandRunnerImpl<C, R> implements CommandRunner<C, R>, Application
 
     private final Map<Class<?>, CommandHandler<C, R>> handlers = new HashMap<>();
 
+    private final ConfigurableListableBeanFactory beanFactory;
+
     @Autowired
-    private ConfigurableListableBeanFactory beanFactory;
+    public CommandRunnerImpl(ConfigurableListableBeanFactory beanFactory) {
+        this.beanFactory = beanFactory;
+    }
 
     @Override
     public R run(C command) {
